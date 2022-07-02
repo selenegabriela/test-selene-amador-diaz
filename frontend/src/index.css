@@ -1,8 +1,19 @@
+html {
+  font-size: 62.5%; 
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  height: 100vh;
+  font-size: 1.6rem;
+  font-family: Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -10,5 +21,91 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+h3{
+  font-family: 'Roboto', sans-serif;
+  font-weight: 700;
+  font-size: 2rem;
+}
+label {
+  font-family: 'Gantari', sans-serif;
+  font-size: 1.7rem;
+}
+
+.grid-container{
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: 1fr 5fr;
+}
+.instructions{
+  margin: 1rem 0 0 19rem;
+  grid-column: 1/4;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.documents{
+  /* height: 170%; */
+  margin: 4rem 0 0 19rem;
+  
+  border-radius: 2rem;
+  box-shadow: 0px 4px 15px 1px rgba(0,0,0,0.04);
+  grid-row: 2/4;
+  grid-column: 1/2;
+}
+.documents-container{
+  display: flex;
+  flex-direction: column;
+  row-gap: 2rem;
+  padding: 2rem;
+}
+.buttons-container{
+  display: flex;
+  column-gap: 2rem;
+}
+.buttons-container label{
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+.btn{
+  font-family:'Gantari', sans-serif;
+  font-weight: 700;
+  border: none;
+  background-color: transparent;
+}
+.btn-disabled-no-selected{
+  /* padding: .1rem .3rem; */
+  border-style: solid;
+  border-width: .1rem;
+  border-radius: .3rem;
+  border-color: #3E3F3A;
+  color: #3E3F3A;
+  font-weight: 400;
+}
+.btn-disabled-selected{
+  border-style: solid;
+  border-width: .1rem;
+  border-radius: .3rem;
+  border-color: #65d5c9;
+}
+.no-selected{
+  border-radius: .4rem;
+  border-width: .1rem;
+  border-style: solid; 
+  border-color: #DFE5D0; 
+  padding: .3rem 0;
+}
+.selected{
+  border-radius: .6rem;
+  box-shadow: 0px 10px 13px -7px #e1e2db, 0px 1px 1px 4px rgba(223,229,208,0);
+  padding: .6rem;
+}
+.item-selected{
+  color: #65d5c9;
+}
+.hidden{
+  visibility: hidden;
 }
 

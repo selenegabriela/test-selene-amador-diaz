@@ -88,8 +88,8 @@ const AddItemScreen = () => {
     }
     
     return (
-        <div>
-            <div>    
+        <div className='grid-container'>
+            <div className='instructions'>    
                 <h3>Selecciona todos los contratos que necesitas: </h3>
                 <label>Elige todos los documentos que necesitas y realiza tu pago. Contéstalos y descárgalos cuando los necesites.</label>
             </div>
@@ -100,46 +100,48 @@ const AddItemScreen = () => {
                 <MessageBox>{error.message}</MessageBox> :
                 
             
-            <div>
-                {
-                    products.map(product => {
-                        return <div key={product.code}>
-                            <div>
-                                <button id='minus' onClick={e => handleClick(e, product)}>-</button>
-                                <button disabled>{product.qty}</button>
-                                <button id='plus' onClick={e => handleClick(e, product)}>+</button>
-                            </div>
-                            <div>
-                                <label htmlFor="">{product.name}</label>
-                            </div>
-                            <div>
+                <div className='documents documents-container'>
+                    {
+                        products.map(product => {
+                            return <div key={product.code} className={`buttons-container ${product.qty>0 ? 'selected' : 'no-selected'}`}>
+                                <div>
+                                    <button className={`btn ${product.qty>0 ? 'item-selected' : 'item-no-selected'}`} id='minus' onClick={e => handleClick(e, product)}>-</button>
+                                    <button className={`btn ${product.qty>0 ? 'item-selected' : 'item-no-selected'} ${product.qty>0 ? 'btn-disabled-selected' : 'btn-disabled-no-selected'}`} disabled>{product.qty}</button>
+                                    <button className={`btn ${product.qty>0 ? 'item-selected' : 'item-no-selected'}`} id='plus' onClick={e => handleClick(e, product)}>+</button>
+                                </div>
+                                <div>
+                                    <label className={`${product.qty>0 ? 'item-selected' : 'item-no-selected'}`} htmlFor="">{product.name}</label>
+                                </div>
+                                <div>
 
+                                </div>
                             </div>
+                        })
+                    }
+                </div>
+            }
+            <div className={`payment ${cart.length>0 ? 'show' : 'hidden'}`}>
+                {
+                    cart.map(product => {
+                        return <div key={product.code}>
+                            <label htmlFor="">{`${product.qty} ${(product.code === 'TermSheet' && product.qty >=3) 
+                            ? (product.qty*100).toFixed(2) : (product.code === 'Nda') 
+                            ? (product.qty % 2 !== 0) 
+                            ? ((Math.ceil(product.qty/2)*product.price).toFixed(2)) : ((Math.floor(product.qty/2)*product.price).toFixed(2)) 
+                            : (product.price*product.qty).toFixed(2)} `}</label> <br />
                         </div>
                     })
                 }
-            </div>}
-            <div>
-            {
-                cart.map(product => {
-                    return <div key={product.code}>
-                        <label htmlFor="">{`${product.qty} ${(product.code === 'TermSheet' && product.qty >=3) 
-                        ? product.qty*100 : (product.code === 'Nda') 
-                        ? (product.qty % 2 !== 0) 
-                        ? (Math.ceil(product.qty/2)*product.price) : (Math.floor(product.qty/2)*product.price) 
-                        : product.price*product.qty} `}</label> <br />
-                    </div>
-                })
-            }
-            <div>
-                <label htmlFor="">Subtotal ${totalPrice}</label> <br />
-                <label htmlFor="">Descuento ${discount}</label> <br />
-                <label htmlFor="">IVA ${iva}</label><br />
-                <label htmlFor="">Total ${finalPrice}</label>
+                <div>
+                    <label htmlFor="">Subtotal ${totalPrice.toFixed(2)}</label> <br />
+                    <label htmlFor="">Descuento ${discount.toFixed(2)}</label> <br />
+                    <label htmlFor="">IVA ${iva.toFixed(2)}</label><br />
+                </div>
+                    <label htmlFor="">Total ${finalPrice.toFixed(2)}</label><br />
+                    <button>Continuar</button>
+                    
+                </div>
             </div>
-                
-            </div>
-        </div>
     )
 }
 
