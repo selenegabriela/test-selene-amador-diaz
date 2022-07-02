@@ -5,7 +5,7 @@ const { Router } = require('express');
 const productRouter = Router();
 
 productRouter.get('/', (req, res) => {
-    console.log(data);
+    // console.log(data);
     res.send(data.products);
 })
 
