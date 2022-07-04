@@ -14,6 +14,7 @@ const AddItemScreen = () => {
     const [ cart, setCart ] = useState([]);
     const [ iva, setIva] = useState(0);
     const [ finalPrice, setFinalPrice ] = useState(0);
+    const [ s, setS ] = useState(0);
     
     let sum = 0;
     const productList = useSelector(state => state.productList);
@@ -25,6 +26,7 @@ const AddItemScreen = () => {
     }, [ dispatch ]);
     useEffect(() => {
         cart.forEach(p => sum += p.price*p.qty);
+        setS(sum);
         setDiscount(((sum*10)-(totalPrice*10))/10);
         setIva(totalPrice*.16);
         setFinalPrice(totalPrice+iva);      
@@ -90,15 +92,16 @@ const AddItemScreen = () => {
     return (
         <div className='grid-container'>
             <div className='instructions'>    
-                <h3>Selecciona todos los contratos que necesitas: </h3>
-                <label>Elige todos los documentos que necesitas y realiza tu pago. Contéstalos y descárgalos cuando los necesites.</label>
+                <h3>Selecciona los contratos que necesitas: </h3>
+                <label>Elige todos los documentos que necesites y realiza tu pago. Contéstalos y descárgalos cuando los necesites.</label>
             </div>
             {
                 loading ?
                 <LoadingBox></LoadingBox> :
                 error ?
                 <MessageBox>{error.message}</MessageBox> :
-                
+              
+            
             
                 <div className='documents documents-container'>
                     {
@@ -110,7 +113,7 @@ const AddItemScreen = () => {
                                     <button className={`btn ${product.qty>0 ? 'item-selected' : 'item-no-selected'}`} id='plus' onClick={e => handleClick(e, product)}>+</button>
                                 </div>
                                 <div>
-                                    <label className={`${product.qty>0 ? 'item-selected' : 'item-no-selected'}`} htmlFor="">{product.name}</label>
+                                    <label className={`${product.qty>0 ? 'item-selected' : 'item-no-selected'}`}>{product.name}</label>
                                 </div>
                                 <div>
 
@@ -121,25 +124,46 @@ const AddItemScreen = () => {
                 </div>
             }
             <div className={`payment ${cart.length>0 ? 'show' : 'hidden'}`}>
-                {
-                    cart.map(product => {
-                        return <div key={product.code}>
-                            <label htmlFor="">{`${product.qty} ${(product.code === 'TermSheet' && product.qty >=3) 
-                            ? (product.qty*100).toFixed(2) : (product.code === 'Nda') 
-                            ? (product.qty % 2 !== 0) 
-                            ? ((Math.ceil(product.qty/2)*product.price).toFixed(2)) : ((Math.floor(product.qty/2)*product.price).toFixed(2)) 
-                            : (product.price*product.qty).toFixed(2)} `}</label> <br />
-                        </div>
-                    })
-                }
-                <div>
-                    <label htmlFor="">Subtotal ${totalPrice.toFixed(2)}</label> <br />
-                    <label htmlFor="">Descuento ${discount.toFixed(2)}</label> <br />
-                    <label htmlFor="">IVA ${iva.toFixed(2)}</label><br />
+                <div className='products-added'>
+                <label className='blue productsAndPrice actualization'>Actualización del precio</label><br /><br />
+                    {
+                        cart.map(product => {
+                            return <div className='grid-cart' key={product.code}>
+                                <label className='productsAndPrice qty'>{`${product.qty} ${product.name}`}</label>
+                                <label className='productsAndPrice price'>{`$${(product.code === 'TermSheet' && product.qty >=3) 
+                                ? `${(product.qty*100).toFixed(2)} MXN` : (product.code === 'Nda') 
+                                ? (product.qty % 2 !== 0) 
+                                ? `${((Math.ceil(product.qty/2)*product.price).toFixed(2))} MXN` : ((Math.floor(product.qty/2)*product.price).toFixed(2)) 
+                                : `${(product.price*product.qty).toFixed(2)} MXN`} `}</label> <br />
+                            </div>
+                        })
+                    }
+                    <label className='productsAndPrice lines'>_______________________________________________</label>
                 </div>
-                    <label htmlFor="">Total ${finalPrice.toFixed(2)}</label><br />
-                    <button>Continuar</button>
-                    
+                <div className='total'>
+                    <div className='total-price'>
+                        <label className='productsAndPrice align-total'>Subtotal</label>
+                        <label className='productsAndPrice price'>${s.toFixed(2)} MXN</label>
+                    </div> 
+                    <div className='total-price'>
+                        <label className='productsAndPrice align-total blue'>Descuento</label>
+                        <label className='productsAndPrice price blue'> - ${discount.toFixed(2)} MXN</label>
+                    </div> 
+                    <div className='total-price'>
+                        <label className='productsAndPrice align-total'>IVA</label>
+                        <label className='productsAndPrice price'>${iva.toFixed(2)} MXN</label>
+                    </div>
+                    <div><label className='productsAndPrice lines'>________________________________________________</label></div><br />
+                </div>
+                <div className='min'>
+                    <div className='total-price'>
+                        <label className='productsAndPrice align-total total-price-text'>Total</label>
+                        <label className='productsAndPrice price'>${finalPrice.toFixed(2)} MXN</label>
+                    </div>
+                    <div className='btn-continue-container'>
+                        <button className='btn-continue'>Continuar</button>        
+                    </div>
+                </div>
                 </div>
             </div>
     )
