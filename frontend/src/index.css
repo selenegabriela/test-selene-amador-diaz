@@ -212,6 +212,7 @@ label {
   padding-right: 2.5rem;
 }
 .lines{
+  margin-left: 2.5rem;
   padding-bottom: 1rem;
   color: var(--lightGray);
 }

@@ -124,7 +124,7 @@ const AddItemScreen = () => {
                 </div>
             }
             <div className={`payment ${cart.length>0 ? 'show' : 'hidden'}`}>
-                <div className='products-added'>
+                <div className='products-added'> 
                 <label className='blue productsAndPrice actualization'>Actualización del precio</label><br /><br />
                     {
                         cart.map(product => {
@@ -138,7 +138,7 @@ const AddItemScreen = () => {
                             </div>
                         })
                     }
-                    <label className='productsAndPrice lines'>_______________________________________________</label>
+                    <label className='productsAndPrice lines'>_____________________________________________</label>
                 </div>
                 <div className='total'>
                     <div className='total-price'>
@@ -153,7 +153,7 @@ const AddItemScreen = () => {
                         <label className='productsAndPrice align-total'>IVA</label>
                         <label className='productsAndPrice price'>${iva.toFixed(2)} MXN</label>
                     </div>
-                    <div><label className='productsAndPrice lines'>________________________________________________</label></div><br />
+                    <div><label className='productsAndPrice lines'>______________________________________________</label></div><br />
                 </div>
                 <div className='min'>
                     <div className='total-price'>
